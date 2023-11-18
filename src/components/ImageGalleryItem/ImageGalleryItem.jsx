@@ -1,28 +1,21 @@
 import css from "./ImageGalleryItem.module.css";
-import { Component } from "react";
+import { useState } from "react";
 import { ImgModal } from "../Modal/Modal";
 
 
-export class ImageGalleryItem extends Component {
-    state = {
-        modalIsOpen: false,
-    }
+export const ImageGalleryItem = ({ image, largeImage, tags }) => {
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    handleModal = () => {
-this.setState((prevState) => ({ modalIsOpen: !prevState.modalIsOpen }));
-    }
+    const handleModal = () => {
+        setModalIsOpen(prevState => !prevState);
+    };
 
-    render() {
-        const { image, largeImage, tags } = this.props;
-        const { modalIsOpen } = this.state;
-
-        return (
-            <>
-            <li className={css.imageGalleryItem} onClick={this.handleModal}>
+    return (
+        <>
+            <li className={css.imageGalleryItem} onClick={handleModal}>
                 <img className={css.imageGalleryItemImage} src={image} alt={tags} />
             </li>
-            {modalIsOpen && <ImgModal isOpen={modalIsOpen} onClose={this.handleModal} largeImg={largeImage} tags={tags}/>}
-            </>
-        )
-    }
-}
+            {modalIsOpen && <ImgModal isOpen={modalIsOpen} onClose={handleModal} largeImg={largeImage} tags={tags} />}
+        </>
+    )
+};
